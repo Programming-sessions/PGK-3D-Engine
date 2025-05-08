@@ -30,18 +30,12 @@
     <ClCompile Include="src\engine\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Primitives.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\Primitives.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
