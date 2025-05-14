@@ -164,6 +164,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\engine\Camera.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
+    <ClCompile Include="src\engine\InputManager.cpp" />
     <ClCompile Include="src\engine\Logger.cpp" />
     <ClCompile Include="src\engine\Primitives.cpp" />
     <ClCompile Include="src\engine\Renderer.cpp" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="src\engine\Camera.h" />
     <ClInclude Include="src\engine\Engine.h" />
+    <ClInclude Include="src\engine\InputManager.h" />
     <ClInclude Include="src\engine\IRenderable.h" />
     <ClInclude Include="src\engine\Logger.h" />
     <ClInclude Include="src\engine\Primitives.h" />
