@@ -1,90 +1,57 @@
 #version 330 core
 
-// Zmienna wyjściowa shadera fragmentów - ostateczny kolor piksela
 out vec4 FragColor;
 
-// Wejścia z vertex shadera (interpolowane dla każdego fragmentu)
+// Wejścia z vertex shadera
 in vec3 FragPos_World;   // Pozycja fragmentu w przestrzeni świata
-in vec3 Normal_World;    // Wektor normalny fragmentu w przestrzeni świata
+in vec3 Normal_World;    // Interpolowana normalna wierzchołka (używana tylko dla smooth shading)
 in vec2 TexCoords;       // Współrzędne tekstury
-in vec4 VertexColor;     // Kolor wierzchołka (może być użyty jako bazowy kolor obiektu)
+in vec4 VertexColor;     // Kolor zdefiniowany dla wierzchołka (np. coneColor)
 
-// Struktura materiału (odpowiada tej zdefiniowanej w C++ w Lighting.h)
+// Struktury materiału i światła (używane tylko dla smooth shading)
 struct Material {
-    vec3 ambient;   // Współczynnik odbicia światła otoczenia (np. kolor materiału w cieniu)
-    vec3 diffuse;   // Współczynnik rozproszenia światła (główny kolor materiału)
-    vec3 specular;  // Współczynnik odbicia zwierciadlanego (kolor blasku)
-    float shininess; // Współczynnik połyskliwości (jak bardzo skoncentrowany jest blask)
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+    float shininess;
 };
 
-// Struktura światła kierunkowego (odpowiada tej zdefiniowanej w C++ w Lighting.h)
 struct DirectionalLight {
-    vec3 direction; // Kierunek, Z KTÓREGO świeci światło (znormalizowany)
-
-    vec3 ambient;  // Intensywność i kolor światła otoczenia
-    vec3 diffuse;  // Intensywność i kolor światła rozproszonego
-    vec3 specular; // Intensywność i kolor światła zwierciadlanego
+    vec3 direction;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
 };
 
-// Uniformy (zmienne globalne ustawiane z C++)
-uniform Material material;          // Właściwości materiału aktualnie rysowanego obiektu
-uniform DirectionalLight dirLight;  // Właściwości globalnego światła kierunkowego
-uniform vec3 viewPos_World;       // Pozycja kamery/obserwatora w przestrzeni świata
-
-// Opcjonalne tekstury (jeśli chcesz używać tekstur zamiast jednolitych kolorów materiału)
-// uniform sampler2D texture_diffuse1;  // Tekstura dla koloru rozproszonego (albedo)
-// uniform sampler2D texture_specular1; // Tekstura dla mapy zwierciadlanej
+// Uniformy
+uniform Material material;          // Używane tylko dla smooth shading
+uniform DirectionalLight dirLight;  // Używane tylko dla smooth shading
+uniform vec3 viewPos_World;       // Używane tylko dla smooth shading
+uniform bool u_UseFlatShading;    // Flaga do przełączania trybu
 
 void main() {
-    // --- 1. Komponent światła otoczenia (Ambient Lighting) ---
-    // Najprostszy rodzaj oświetlenia, daje obiektom pewien bazowy kolor, nawet jeśli nie są bezpośrednio oświetlone.
-    vec3 ambientColor = dirLight.ambient * material.ambient;
-    // Przykład z teksturą:
-    // vec3 ambientColor = dirLight.ambient * texture(texture_diffuse1, TexCoords).rgb;
+    if (u_UseFlatShading) {
+        // Tryb "Flat Shading" (Unlit): Użyj bezpośrednio VertexColor
+        FragColor = VertexColor;
+    } else {
+        // Tryb Smooth Shading (Oświetlenie Phonga)
+        vec3 N_for_lighting = normalize(Normal_World);
 
+        // --- Światło otoczenia (Ambient) ---
+        vec3 ambientColor = dirLight.ambient * material.ambient;
 
-    // --- 2. Komponent światła rozproszonego (Diffuse Lighting) ---
-    // Symuluje, jak światło odbija się od matowych powierzchni.
-    // Intensywność zależy od kąta między normalną powierzchni a kierunkiem światła.
-    vec3 norm = normalize(Normal_World); // Upewnij się, że normalna jest znormalizowana
-    vec3 lightDir = normalize(-dirLight.direction); // Kierunek WEKTORA DO źródła światła (odwracamy kierunek światła)
-    
-    // Oblicz współczynnik rozproszenia (kąt między normalną a kierunkiem światła)
-    // max(dot(norm, lightDir), 0.0) zapewnia, że współczynnik nie jest ujemny (gdy światło jest "za" powierzchnią)
-    float diffFactor = max(dot(norm, lightDir), 0.0);
-    vec3 diffuseColor = dirLight.diffuse * diffFactor * material.diffuse;
-    // Przykład z teksturą:
-    // vec3 diffuseColor = dirLight.diffuse * diffFactor * texture(texture_diffuse1, TexCoords).rgb;
+        // --- Światło rozproszone (Diffuse) ---
+        vec3 lightDir = normalize(-dirLight.direction);
+        float diffFactor = max(dot(N_for_lighting, lightDir), 0.0);
+        vec3 diffuseColor = dirLight.diffuse * diffFactor * material.diffuse;
 
-
-    // --- 3. Komponent światła zwierciadlanego (Specular Lighting) ---
-    // Symuluje blask/połysk na gładkich powierzchniach.
-    // Intensywność zależy od kąta między kierunkiem patrzenia a kierunkiem odbicia światła.
-    vec3 viewDir = normalize(viewPos_World - FragPos_World); // Kierunek od fragmentu DO kamery
-    vec3 reflectDir = reflect(-lightDir, norm); // Wektor odbicia światła od powierzchni
-                                                // reflect oczekuje wektora OD źródła światła, stąd -lightDir
-
-    // Oblicz współczynnik zwierciadlany
-    // pow(..., material.shininess) kontroluje rozmiar i intensywność blasku
-    float specFactor = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-    vec3 specularColor = dirLight.specular * specFactor * material.specular;
-    // Przykład z teksturą specular map:
-    // vec3 specularMapColor = texture(texture_specular1, TexCoords).rgb; // Pobierz intensywność specular z mapy
-    // vec3 specularColor = dirLight.specular * specFactor * specularMapColor;
-
-
-    // --- Połączenie wyników ---
-    // Sumujemy wszystkie komponenty oświetlenia.
-    // VertexColor może być użyty jako bazowy kolor obiektu, który jest modulowany przez oświetlenie,
-    // lub material.diffuse może pełnić tę rolę.
-    // W tym przykładzie zakładamy, że material.diffuse (lub tekstura diffuse) to główny kolor obiektu.
-    // Jeśli chcesz użyć VertexColor jako głównego koloru, zmodyfikuj obliczenia ambient i diffuse.
-    
-    vec3 finalColor = ambientColor + diffuseColor + specularColor;
-
-    // Można pomnożyć przez VertexColor, jeśli VertexColor ma modyfikować ostateczny wynik
-    // np. finalColor *= VertexColor.rgb;
-
-    FragColor = vec4(finalColor, 1.0); // Ustawiamy alpha na 1.0 (nieprzezroczysty)
-                                       // Można użyć VertexColor.a, jeśli ma znaczenie.
+        // --- Światło zwierciadlane (Specular) ---
+        vec3 viewDir = normalize(viewPos_World - FragPos_World);
+        vec3 reflectDir = reflect(-lightDir, N_for_lighting);
+        float specFactor = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+        vec3 specularColor = dirLight.specular * specFactor * material.specular;
+        
+        vec3 finalColor = ambientColor + diffuseColor + specularColor;
+        FragColor = vec4(finalColor, 1.0); // Alpha można wziąć z VertexColor.a lub material.alpha, jeśli dodasz
+    }
 }
