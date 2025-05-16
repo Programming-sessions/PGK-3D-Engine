@@ -171,6 +171,7 @@
     <ClCompile Include="src\engine\Renderer.cpp" />
     <ClCompile Include="src\engine\ResourceManager.cpp" />
     <ClCompile Include="src\engine\Shader.cpp" />
+    <ClCompile Include="src\engine\TestRenderObject.cpp" />
     <ClCompile Include="src\engine\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="src\engine\Renderer.h" />
     <ClInclude Include="src\engine\ResourceManager.h" />
     <ClInclude Include="src\engine\Shader.h" />
+    <ClInclude Include="src\engine\TestRenderObject.h" />
     <ClInclude Include="src\engine\TextRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
