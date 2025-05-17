@@ -68,61 +68,75 @@ uniform int numSpotLights;
 
 // Uniformy do obsługi cieni
 uniform sampler2D shadowMap;         // Tekstura mapy głębi
-// lightSpaceMatrix jest już używany w VS, ale może być potrzebny tutaj, jeśli nie jest przekazywany FragPosLightSpace
-// uniform mat4 lightSpaceMatrix; // Jeśli nie używasz FragPosLightSpace bezpośrednio
 
-// --- Funkcja obliczająca współczynnik cienia ---
+// NOWY UNIFORM: Rozmiar jednego teksla mapy cieni (1.0 / rozmiar_mapy_cieni)
+// Np. jeśli mapa cieni ma 2048x2048, to texelSize = 1.0 / 2048.0
+uniform float shadowMapTexelSize;
+
+// --- Funkcja obliczająca współczynnik cienia z PCF ---
 // normalWorld: normalna powierzchni w przestrzeni świata
 // lightDirWorld: znormalizowany kierunek DO źródła światła w przestrzeni świata
-float CalculateShadowFactor(vec4 fragPosLightSpace, vec3 normalWorld, vec3 lightDirWorld) {
+float CalculateShadowFactorPCF(vec4 fragPosLightSpace, vec3 normalWorld, vec3 lightDirWorld) {
     // Wykonaj dzielenie perspektywiczne
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
 
     // Przekształć współrzędne do zakresu [0,1] (dla próbkowania tekstury)
     projCoords = projCoords * 0.5 + 0.5;
 
-    // Jeśli współrzędne są poza zakresem [0,1], fragment nie jest w zasięgu mapy cieni
-    // (np. jest poza frustum światła). W takim przypadku nie powinien być w cieniu.
-    // Jednakże, CLAMP_TO_BORDER na teksturze mapy cieni powinien obsłużyć to,
-    // zwracając głębokość 1.0, co sprawi, że fragment będzie traktowany jako nieocieniony,
-    // jeśli currentDepth < 1.0.
-    // Można dodać jawne sprawdzenie, jeśli CLAMP_TO_BORDER nie działa zgodnie z oczekiwaniami.
-    // if (projCoords.z > 1.0 || projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
-    //     return 0.0; // Nie w cieniu
-
-    // Pobierz najbliższą głębokość z mapy cieni (z perspektywy światła)
-    float closestDepthFromShadowMap = texture(shadowMap, projCoords.xy).r;
-
     // Pobierz aktualną głębokość fragmentu (z perspektywy światła)
     float currentDepth = projCoords.z;
     
     // Bias, aby uniknąć artefaktów "shadow acne"
     // Dynamiczny bias zależny od kąta między normalną a kierunkiem światła
-    // Im bardziej powierzchnia jest równoległa do światła, tym większy bias.
     float bias = max(0.005 * (1.0 - dot(normalWorld, lightDirWorld)), 0.0005);
     // Alternatywnie, prosty stały bias:
     // float bias = 0.002;
 
-    // Sprawdź, czy fragment jest w cieniu
-    // Jeśli aktualna głębokość jest większa niż najbliższa zapisana głębokość (plus bias),
-    // to fragment jest ocieniony.
-    float shadow = 0.0; // 0.0 = brak cienia, 1.0 = w pełnym cieniu
-    if (currentDepth - bias > closestDepthFromShadowMap) {
-        shadow = 1.0;
+    float shadow = 0.0;
+    
+    // Liczba próbek PCF w jednym wymiarze (np. 2 oznacza okno 2x2 = 4 próbki)
+    // Możesz zwiększyć dla lepszej jakości (np. 3 dla 3x3=9 próbek), kosztem wydajności.
+    // Użycie pętli jest bardziej elastyczne niż "rozwijanie" jej ręcznie.
+    const int pcfRadius = 1; // Dla okna 3x3 (od -1 do 1) -> (2*pcfRadius+1)^2 próbek
+                             // Dla okna 2x2, można użyć pętli od 0 do 1 i odpowiednio dostosować offset.
+                             // Tutaj użyjemy prostego okna 2x2 dla przykładu (4 próbki).
+
+    float totalSamples = 0.0;
+
+    // Pętla dla prostego PCF 2x2 (4 próbki)
+    // Próbki są brane z narożników piksela mapy cieni.
+    // Można użyć bardziej zaawansowanych wzorów próbkowania.
+    for (int x = 0; x <= 1; ++x) { // Można zmienić na -1 do 1 dla 3x3 itd.
+        for (int y = 0; y <= 1; ++y) {
+            // Przesunięcie próbki. Dla 2x2, przesuwamy o (-0.5, -0.5), (0.5, -0.5), (-0.5, 0.5), (0.5, 0.5) * texelSize
+            // względem centrum piksela, lub po prostu o (0,0), (1,0), (0,1), (1,1) * texelSize względem lewego dolnego rogu.
+            // Dla prostoty, użyjemy przesunięć o (0,0), (1,0), (0,1), (1,1) względem projCoords.xy
+            // i dostosujemy to tak, aby próbki były wokół projCoords.xy
+            vec2 offsetFactor = vec2(x - 0.5, y - 0.5); // Centruje próbki wokół projCoords.xy
+            vec2 offset = offsetFactor * shadowMapTexelSize;
+            
+            float pcfDepth = texture(shadowMap, projCoords.xy + offset).r;
+            if (currentDepth - bias > pcfDepth) {
+                shadow += 1.0;
+            }
+            totalSamples += 1.0;
+        }
+    }
+
+    if (totalSamples > 0.0) {
+        shadow /= totalSamples; // Uśrednij wynik
     }
     
     // Zabezpieczenie przed rzucaniem cienia przez fragmenty poza daleką płaszczyzną frustum światła
-    // Jeśli currentDepth > 1.0, oznacza to, że fragment jest dalej niż far plane światła.
-    // W takim przypadku nie powinien być uznawany za ocieniony przez mapę (bo jest poza jej zasięgiem).
-    if(projCoords.z > 1.0){
+    if(projCoords.z > 1.0){ // Fragment jest dalej niż far plane światła
         shadow = 0.0;
     }
 
-    return shadow;
+    return shadow; // 0.0 = brak cienia, 1.0 = w pełnym cieniu (uśrednione)
 }
 
 
-// --- Funkcje pomocnicze do obliczania światła (takie same jak wcześniej) ---
+// --- Funkcje pomocnicze do obliczania światła (CalculateDirLight zmodyfikowane) ---
 vec3 CalculateDirLight(DirectionalLight light, vec3 normal, vec3 viewDir, float shadowFactor) {
     if (!light.enabled) return vec3(0.0);
 
@@ -194,9 +208,10 @@ void main() {
         
         float shadowFactor = 0.0;
         if (dirLight.enabled) { // Obliczaj cień tylko jeśli światło kierunkowe jest włączone
-            // Kierunek DO światła dla funkcji CalculateShadowFactor
+            // Kierunek DO światła dla funkcji CalculateShadowFactorPCF
             vec3 lightDirToSource = normalize(-dirLight.direction); 
-            shadowFactor = CalculateShadowFactor(FragPosLightSpace, norm_world_normalized, lightDirToSource);
+            // Użyj nowej funkcji z PCF
+            shadowFactor = CalculateShadowFactorPCF(FragPosLightSpace, norm_world_normalized, lightDirToSource);
         }
 
         vec3 resultColor = vec3(0.0);
@@ -206,22 +221,20 @@ void main() {
         
         // 2. Światła punktowe (bez cieni w tej implementacji)
         for (int i = 0; i < numPointLights; i++) {
-            if(i < MAX_POINT_LIGHTS) {
+            if(i < MAX_POINT_LIGHTS) { // Dodatkowe zabezpieczenie, choć pętla powinna być poprawna
                  resultColor += CalculatePointLight(pointLights[i], norm_world_normalized, FragPos_World, viewDir_world_normalized);
             }
         }
             
         // 3. Reflektory (bez cieni w tej implementacji)
         for (int i = 0; i < numSpotLights; i++) {
-             if(i < MAX_SPOT_LIGHTS) {
+             if(i < MAX_SPOT_LIGHTS) { // Dodatkowe zabezpieczenie
                 resultColor += CalculateSpotLight(spotLights[i], norm_world_normalized, FragPos_World, viewDir_world_normalized);
             }
         }
         
         FragColor = vec4(resultColor, 1.0);
         // TODO: Można dodać obsługę tekstur, np. mnożąc FragColor.rgb przez texture(textureSampler, TexCoords).rgb
-        // Jeśli masz sampler2D dla tekstury obiektu, np. uniform sampler2D diffuseTexture;
-        // FragColor.rgb *= texture(diffuseTexture, TexCoords).rgb;
     }
 }
 
