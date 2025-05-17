@@ -10,26 +10,20 @@ out vec3 FragPos_World;    // Pozycja fragmentu w przestrzeni świata
 out vec3 Normal_World;     // Normalna w przestrzeni świata (interpolowana)
 out vec2 TexCoords;        // Współrzędne tekstury
 out vec4 VertexColor_FS;   // Przekazanie koloru wierzchołka do FS
-out vec4 FragPosLightSpace; // Pozycja fragmentu w przestrzeni światła (dla mapy cieni)
 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-uniform mat4 lightSpaceMatrix; // Macierz transformująca do przestrzeni światła (View * Projection światła)
 
 void main() {
-    // Transformacja do przestrzeni klipu kamery
     gl_Position = projection * view * model * vec4(aPos, 1.0);
-
-    // Transformacje do przestrzeni świata dla oświetlenia
     FragPos_World = vec3(model * vec4(aPos, 1.0));
+
+    // Transformacja normalnej do przestrzeni świata
+    // Używamy macierzy normalnych (transponowana odwrotność submacierzy 3x3 z macierzy modelu)
+    // aby poprawnie obsłużyć niescalarne skalowanie.
     Normal_World = normalize(mat3(transpose(inverse(model))) * aNormal);
     
     TexCoords = aTexCoords;
-    VertexColor_FS = aColor;
-
-    // Transformacja pozycji fragmentu do przestrzeni światła
-    // Ta pozycja zostanie użyta w fragment shaderze do próbkowania mapy cieni
-    FragPosLightSpace = lightSpaceMatrix * model * vec4(aPos, 1.0);
+    VertexColor_FS = aColor; // Przekaż kolor wierzchołka
 }
-
