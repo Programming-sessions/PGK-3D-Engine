@@ -166,12 +166,14 @@
     <ClCompile Include="src\engine\Engine.cpp" />
     <ClCompile Include="src\engine\InputManager.cpp" />
     <ClCompile Include="src\engine\Lighting.cpp" />
+    <ClCompile Include="src\engine\LightingManager.cpp" />
     <ClCompile Include="src\engine\Logger.cpp" />
     <ClCompile Include="src\engine\Primitives.cpp" />
     <ClCompile Include="src\engine\Renderer.cpp" />
     <ClCompile Include="src\engine\ResourceManager.cpp" />
     <ClCompile Include="src\engine\Shader.cpp" />
     <ClCompile Include="src\engine\ShadowMapper.cpp" />
+    <ClCompile Include="src\engine\ShadowSystem.cpp" />
     <ClCompile Include="src\engine\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -180,12 +182,14 @@
     <ClInclude Include="src\engine\InputManager.h" />
     <ClInclude Include="src\engine\IRenderable.h" />
     <ClInclude Include="src\engine\Lighting.h" />
+    <ClInclude Include="src\engine\LightingManager.h" />
     <ClInclude Include="src\engine\Logger.h" />
     <ClInclude Include="src\engine\Primitives.h" />
     <ClInclude Include="src\engine\Renderer.h" />
     <ClInclude Include="src\engine\ResourceManager.h" />
     <ClInclude Include="src\engine\Shader.h" />
     <ClInclude Include="src\engine\ShadowMapper.h" />
+    <ClInclude Include="src\engine\ShadowSystem.h" />
     <ClInclude Include="src\engine\TextRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
