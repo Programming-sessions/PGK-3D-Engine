@@ -5,16 +5,8 @@ layout (location = 0) in vec3 aPos; // Pozycja wierzchołka w przestrzeni modelu
 uniform mat4 model;             // Macierz modelu dla obiektu
 uniform mat4 lightSpaceMatrix;  // Macierz transformująca do przestrzeni światła (lightView * lightProjection)
 
-// Wyjście do fragment shadera: pozycja fragmentu w przestrzeni świata
-// Zadeklarowane globalnie - POPRAWNIE
-out vec3 FragPos_World_DS; 
-
 void main()
 {
-    // Transformacja pozycji wierzchołka do przestrzeni świata
-    // Ta wartość będzie użyta w fragment shaderze do obliczenia odległości od światła
-    FragPos_World_DS = vec3(model * vec4(aPos, 1.0));
-
     // Transformacja pozycji wierzchołka do przestrzeni klipu z perspektywy światła
     // Wynikowa pozycja jest używana do testu głębokości i zapisu do mapy głębi.
     gl_Position = lightSpaceMatrix * model * vec4(aPos, 1.0);
