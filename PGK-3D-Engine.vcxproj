@@ -164,6 +164,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\engine\BoundingVolume.cpp" />
     <ClCompile Include="src\engine\Camera.cpp" />
+    <ClCompile Include="src\engine\CollisionSystem.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
     <ClCompile Include="src\engine\Event.cpp" />
     <ClCompile Include="src\engine\EventManager.cpp" />
@@ -184,6 +185,7 @@
   <ItemGroup>
     <ClInclude Include="src\engine\BoundingVolume.h" />
     <ClInclude Include="src\engine\Camera.h" />
+    <ClInclude Include="src\engine\CollisionSystem.h" />
     <ClInclude Include="src\engine\Engine.h" />
     <ClInclude Include="src\engine\Event.h" />
     <ClInclude Include="src\engine\EventManager.h" />
