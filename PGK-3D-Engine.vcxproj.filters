@@ -74,6 +74,12 @@
     <ClCompile Include="src\engine\EventManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\BoundingVolume.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\ICollidable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\Engine.h">
@@ -125,6 +131,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\EventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\BoundingVolume.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\ICollidable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

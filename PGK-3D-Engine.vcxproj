@@ -162,10 +162,12 @@
   <ItemGroup>
     <ClCompile Include="external\glad\src\glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\engine\BoundingVolume.cpp" />
     <ClCompile Include="src\engine\Camera.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
     <ClCompile Include="src\engine\Event.cpp" />
     <ClCompile Include="src\engine\EventManager.cpp" />
+    <ClCompile Include="src\engine\ICollidable.cpp" />
     <ClCompile Include="src\engine\IEventListener.cpp" />
     <ClCompile Include="src\engine\InputManager.cpp" />
     <ClCompile Include="src\engine\Lighting.cpp" />
@@ -180,10 +182,12 @@
     <ClCompile Include="src\engine\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\engine\BoundingVolume.h" />
     <ClInclude Include="src\engine\Camera.h" />
     <ClInclude Include="src\engine\Engine.h" />
     <ClInclude Include="src\engine\Event.h" />
     <ClInclude Include="src\engine\EventManager.h" />
+    <ClInclude Include="src\engine\ICollidable.h" />
     <ClInclude Include="src\engine\IEventListener.h" />
     <ClInclude Include="src\engine\InputManager.h" />
     <ClInclude Include="src\engine\IRenderable.h" />
