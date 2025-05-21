@@ -168,6 +168,7 @@
     <ClCompile Include="src\engine\Engine.cpp" />
     <ClCompile Include="src\engine\Event.cpp" />
     <ClCompile Include="src\engine\EventManager.cpp" />
+    <ClCompile Include="src\engine\GameStateManager.cpp" />
     <ClCompile Include="src\engine\ICollidable.cpp" />
     <ClCompile Include="src\engine\IEventListener.cpp" />
     <ClCompile Include="src\engine\InputManager.cpp" />
@@ -189,8 +190,10 @@
     <ClInclude Include="src\engine\Engine.h" />
     <ClInclude Include="src\engine\Event.h" />
     <ClInclude Include="src\engine\EventManager.h" />
+    <ClInclude Include="src\engine\GameStateManager.h" />
     <ClInclude Include="src\engine\ICollidable.h" />
     <ClInclude Include="src\engine\IEventListener.h" />
+    <ClInclude Include="src\engine\IGameState.h" />
     <ClInclude Include="src\engine\InputManager.h" />
     <ClInclude Include="src\engine\IRenderable.h" />
     <ClInclude Include="src\engine\Lighting.h" />
