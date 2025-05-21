@@ -181,6 +181,7 @@
     <ClCompile Include="src\engine\Shader.cpp" />
     <ClCompile Include="src\engine\ShadowMapper.cpp" />
     <ClCompile Include="src\engine\ShadowSystem.cpp" />
+    <ClCompile Include="src\engine\SplashScreenState.cpp" />
     <ClCompile Include="src\engine\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +206,7 @@
     <ClInclude Include="src\engine\Shader.h" />
     <ClInclude Include="src\engine\ShadowMapper.h" />
     <ClInclude Include="src\engine\ShadowSystem.h" />
+    <ClInclude Include="src\engine\SplashScreenState.h" />
     <ClInclude Include="src\engine\TextRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
