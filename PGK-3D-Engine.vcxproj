@@ -179,6 +179,7 @@
     <ClCompile Include="src\engine\Lighting.cpp" />
     <ClCompile Include="src\engine\LightingManager.cpp" />
     <ClCompile Include="src\engine\Logger.cpp" />
+    <ClCompile Include="src\engine\Model.cpp" />
     <ClCompile Include="src\engine\Primitives.cpp" />
     <ClCompile Include="src\engine\Renderer.cpp" />
     <ClCompile Include="src\engine\ResourceManager.cpp" />
@@ -205,6 +206,8 @@
     <ClInclude Include="src\engine\Lighting.h" />
     <ClInclude Include="src\engine\LightingManager.h" />
     <ClInclude Include="src\engine\Logger.h" />
+    <ClInclude Include="src\engine\Model.h" />
+    <ClInclude Include="src\engine\ModelData.h" />
     <ClInclude Include="src\engine\Primitives.h" />
     <ClInclude Include="src\engine\Renderer.h" />
     <ClInclude Include="src\engine\ResourceManager.h" />
