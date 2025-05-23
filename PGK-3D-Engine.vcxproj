@@ -188,7 +188,6 @@
     <ClCompile Include="src\engine\ShadowSystem.cpp" />
     <ClCompile Include="src\engine\SplashScreenState.cpp" />
     <ClCompile Include="src\engine\TextRenderer.cpp" />
-    <ClCompile Include="src\engine\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BoundingVolume.h" />
