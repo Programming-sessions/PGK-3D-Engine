@@ -71,9 +71,6 @@
     <ClCompile Include="src\engine\BoundingVolume.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ICollidable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\CollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

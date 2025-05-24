@@ -173,7 +173,6 @@
     <ClCompile Include="src\engine\Event.cpp" />
     <ClCompile Include="src\engine\EventManager.cpp" />
     <ClCompile Include="src\engine\GameStateManager.cpp" />
-    <ClCompile Include="src\engine\ICollidable.cpp" />
     <ClCompile Include="src\engine\InputManager.cpp" />
     <ClCompile Include="src\engine\LightingManager.cpp" />
     <ClCompile Include="src\engine\Logger.cpp" />
