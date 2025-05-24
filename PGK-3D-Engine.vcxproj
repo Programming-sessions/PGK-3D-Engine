@@ -176,7 +176,6 @@
     <ClCompile Include="src\engine\ICollidable.cpp" />
     <ClCompile Include="src\engine\IEventListener.cpp" />
     <ClCompile Include="src\engine\InputManager.cpp" />
-    <ClCompile Include="src\engine\Lighting.cpp" />
     <ClCompile Include="src\engine\LightingManager.cpp" />
     <ClCompile Include="src\engine\Logger.cpp" />
     <ClCompile Include="src\engine\Model.cpp" />
