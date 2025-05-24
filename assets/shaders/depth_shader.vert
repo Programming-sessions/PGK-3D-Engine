@@ -1,21 +1,27 @@
 #version 330 core
-layout (location = 0) in vec3 aPos; // Pozycja wierzchołka w przestrzeni modelu
 
-// Macierze transformacji
-uniform mat4 model;             // Macierz modelu dla obiektu
-uniform mat4 lightSpaceMatrix;  // Macierz transformująca do przestrzeni światła (lightView * lightProjection)
+// --- Atrybuty wejściowe wierzchołka ---
+layout (location = 0) in vec3 aPos; // Pozycja wierzchołka w przestrzeni lokalnej modelu
 
-// Wyjście do fragment shadera: pozycja fragmentu w przestrzeni świata
-// Zadeklarowane globalnie - POPRAWNIE
-out vec3 FragPos_World_DS; 
+// --- Uniformy ---
+uniform mat4 model;            // Macierz modelu (transformacja z przestrzeni lokalnej do przestrzeni świata)
+uniform mat4 lightSpaceMatrix; // Macierz transformująca do przestrzeni światła (zazwyczaj lightView * lightProjection)
+
+// --- Wyjście do Fragment Shadera ---
+// Pozycja fragmentu w przestrzeni świata.
+// Potrzebna w FS do obliczenia liniowej głębokości dla map sześciennych (PointLight).
+out vec3 FragPos_World_DS;
 
 void main()
 {
-    // Transformacja pozycji wierzchołka do przestrzeni świata
-    // Ta wartość będzie użyta w fragment shaderze do obliczenia odległości od światła
+    // Krok 1: Transformacja pozycji wierzchołka do przestrzeni świata.
+    // Ta wartość jest interpolowana i przekazywana do fragment shadera.
     FragPos_World_DS = vec3(model * vec4(aPos, 1.0));
 
-    // Transformacja pozycji wierzchołka do przestrzeni klipu z perspektywy światła
-    // Wynikowa pozycja jest używana do testu głębokości i zapisu do mapy głębi.
+    // Krok 2: Transformacja pozycji wierzchołka do przestrzeni przycinania (clip space) z perspektywy światła.
+    // Wynikowa pozycja (gl_Position) jest używana przez OpenGL do testu głębokości
+    // i rasteryzacji, a jej wartość .z (po transformacji perspektywicznej i normalizacji)
+    // jest zapisywana do bufora głębi (depth map).
     gl_Position = lightSpaceMatrix * model * vec4(aPos, 1.0);
 }
+
