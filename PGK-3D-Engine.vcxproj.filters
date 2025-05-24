@@ -62,9 +62,6 @@
     <ClCompile Include="src\engine\ShadowSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Event.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\EventManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

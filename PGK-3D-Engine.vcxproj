@@ -170,7 +170,6 @@
     <ClCompile Include="src\engine\Camera.cpp" />
     <ClCompile Include="src\engine\CollisionSystem.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
-    <ClCompile Include="src\engine\Event.cpp" />
     <ClCompile Include="src\engine\EventManager.cpp" />
     <ClCompile Include="src\engine\GameStateManager.cpp" />
     <ClCompile Include="src\engine\InputManager.cpp" />
