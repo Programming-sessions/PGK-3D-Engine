@@ -65,9 +65,6 @@
     <ClCompile Include="src\engine\Event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\IEventListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\EventManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
