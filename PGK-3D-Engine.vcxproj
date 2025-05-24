@@ -170,13 +170,9 @@
     <ClCompile Include="src\engine\Camera.cpp" />
     <ClCompile Include="src\engine\CollisionSystem.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
-    <ClCompile Include="src\engine\Event.cpp" />
     <ClCompile Include="src\engine\EventManager.cpp" />
     <ClCompile Include="src\engine\GameStateManager.cpp" />
-    <ClCompile Include="src\engine\ICollidable.cpp" />
-    <ClCompile Include="src\engine\IEventListener.cpp" />
     <ClCompile Include="src\engine\InputManager.cpp" />
-    <ClCompile Include="src\engine\Lighting.cpp" />
     <ClCompile Include="src\engine\LightingManager.cpp" />
     <ClCompile Include="src\engine\Logger.cpp" />
     <ClCompile Include="src\engine\Model.cpp" />
@@ -188,7 +184,6 @@
     <ClCompile Include="src\engine\ShadowSystem.cpp" />
     <ClCompile Include="src\engine\SplashScreenState.cpp" />
     <ClCompile Include="src\engine\TextRenderer.cpp" />
-    <ClCompile Include="src\engine\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BoundingVolume.h" />
