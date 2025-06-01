@@ -362,5 +362,9 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+#
+code.md
+zebrane_pliki_poprawione.md
+
 # Wyjatek dla modeli
 !assets/models/*.obj
