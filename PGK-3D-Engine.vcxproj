@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FREETYPE_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\engine;$(ProjectDir)external\glad\include;$(SolutionDir)packages\freetype.2.8.0.1\build\native\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\game;$(ProjectDir)src\engine;$(ProjectDir)external\glad\include;$(SolutionDir)packages\freetype.2.8.0.1\build\native\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FREETYPE_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\engine;$(ProjectDir)external\glad\include;$(SolutionDir)packages\freetype.2.8.0.1\build\native\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\game;$(ProjectDir)src\engine;$(ProjectDir)external\glad\include;$(SolutionDir)packages\freetype.2.8.0.1\build\native\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -126,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FREETYPE_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external;$(ProjectDir)src\engine;$(ProjectDir)external\glad\include;$(SolutionDir)packages\freetype.2.8.0.1\build\native\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\game;$(ProjectDir)external;$(ProjectDir)src\engine;$(ProjectDir)external\glad\include;$(SolutionDir)packages\freetype.2.8.0.1\build\native\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -145,7 +145,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FREETYPE_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\engine;$(ProjectDir)external\glad\include;$(SolutionDir)packages\freetype.2.8.0.1\build\native\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\game;$(ProjectDir)src\engine;$(ProjectDir)external\glad\include;$(SolutionDir)packages\freetype.2.8.0.1\build\native\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -184,6 +184,8 @@
     <ClCompile Include="src\engine\ShadowSystem.cpp" />
     <ClCompile Include="src\engine\SplashScreenState.cpp" />
     <ClCompile Include="src\engine\TextRenderer.cpp" />
+    <ClCompile Include="src\game\DemoState.cpp" />
+    <ClCompile Include="src\game\MenuState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\BoundingVolume.h" />
@@ -212,6 +214,8 @@
     <ClInclude Include="src\engine\SplashScreenState.h" />
     <ClInclude Include="src\engine\TextRenderer.h" />
     <ClInclude Include="src\engine\Texture.h" />
+    <ClInclude Include="src\game\DemoState.h" />
+    <ClInclude Include="src\game\MenuState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

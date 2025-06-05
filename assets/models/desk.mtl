@@ -1,0 +1,55 @@
+# Blender 3.3.1 MTL File: 'desk_export.blend'
+# www.blender.org
+
+newmtl Bamboo_wood
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/WoodQuarteredChiffon001_COL_3K.jpg
+map_Bump -bm 1.000000 C:/WoodQuarteredChiffon001_NRM16_3K.tif
+
+newmtl Bamboo_wood.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/WoodQuarteredChiffon001_COL_3K.jpg
+map_Bump -bm 1.000000 C:/WoodQuarteredChiffon001_NRM16_3K.tif
+
+newmtl Bamboo_wood.002
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/WoodQuarteredChiffon001_COL_3K.jpg
+map_Bump -bm 1.000000 C:/WoodQuarteredChiffon001_NRM16_3K.tif
+
+newmtl White_steel
+Ns 212.903641
+Ka 0.299035 0.299035 0.299035
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl white_cardbord
+Ns 83.915955
+Ka 1.000000 1.000000 1.000000
+Kd 0.655925 0.655925 0.655925
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
