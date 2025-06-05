@@ -9,8 +9,8 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd C:/WoodQuarteredChiffon001_COL_3K.jpg
-map_Bump -bm 1.000000 C:/WoodQuarteredChiffon001_NRM16_3K.tif
+map_Kd ../textures/WoodQuarteredChiffon001_COL_3K.jpg
+map_Bump -bm 1.000000 ../textures/WoodQuarteredChiffon001_NRM16_3K.tif
 
 newmtl Bamboo_wood.001
 Ns 250.000000
@@ -20,8 +20,8 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd C:/WoodQuarteredChiffon001_COL_3K.jpg
-map_Bump -bm 1.000000 C:/WoodQuarteredChiffon001_NRM16_3K.tif
+map_Kd ../textures/WoodQuarteredChiffon001_COL_3K.jpg
+map_Bump -bm 1.000000 ../textures/WoodQuarteredChiffon001_NRM16_3K.tif
 
 newmtl Bamboo_wood.002
 Ns 250.000000
@@ -31,8 +31,8 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd C:/WoodQuarteredChiffon001_COL_3K.jpg
-map_Bump -bm 1.000000 C:/WoodQuarteredChiffon001_NRM16_3K.tif
+map_Kd ../textures/WoodQuarteredChiffon001_COL_3K.jpg
+map_Bump -bm 1.000000 ../textures/WoodQuarteredChiffon001_NRM16_3K.tif
 
 newmtl White_steel
 Ns 212.903641
